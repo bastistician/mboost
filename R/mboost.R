@@ -426,10 +426,6 @@ mboost_fit <- function(blg, response, weights = rep(1, NROW(response)),
                 cf[, which(ix)] <- cftmp
             }
             if (!is.matrix(cf)) cf <- matrix(cf, nrow = 1)
-            ## check if base-learner has coefficients
-            if(any(sapply(cf, is.null))){
-                ret <- NULL
-            } else {
                 ret <- switch(aggregate,
                               "sum" = rowSums(cf) * nu,
                               "cumsum" = {
@@ -438,7 +434,6 @@ mboost_fit <- function(blg, response, weights = rep(1, NROW(response)),
                               },
                               "none" = nu * cf
                               )
-            }
             ### set names, but not for bolscw base-learner
             if (!cwlin) {
                 nm <- bl[[w]]$Xnames
