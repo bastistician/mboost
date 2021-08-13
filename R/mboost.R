@@ -414,6 +414,9 @@ mboost_fit <- function(blg, response, weights = rep(1, NROW(response)),
                     nm <- bl[[w]]$Xnames
                     cf <- matrix(0, nrow = length(nm), ncol = mstop)
                 }
+            } else if (is.null(coef(ens[ix][[1]]))) {
+                ## base-learner has no coefficients
+                return(NULL)
             } else {
                 if (inherits(ens[ix][[1]], "bm_cwlin") && !cwlin) {
                     cftmp <- sapply(ens[ix], coef, all = TRUE)
